@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f5f5f5;
+            font-family: Arial;
+        }
+
+        .calculator {
+            width: 350px;
+            background: #aaa;
+            padding: 20px;
+            border: 2px solid #555;
+            border-radius: 20px;
+        }
+
+        .display {
+            background: white;
+            height: 100px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #555;
+            border-radius: 8px;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        #expression {
+            font-size: 20px;
+            color: #555;
+        }
+
+        #result {
+            font-size: 35px;
+            margin-top: 10px;
+        }
+
+        .clear-delete {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            height: 65px;
+            font-size: 22px;
+            border: 2px solid #777;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .clear, .delete {
+            flex: 1;
+        }
+
+        .clear {
+            background: #ffa6a6;
+        }
+
+        .delete {
+            background: #aaaaff;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .buttons button {
+            background: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <div class="display">
+            <div id="expression"></div>
+            <div id="result">0</div>
+        </div>
+
+        <div class="clear-delete">
+            <button class="clear" onclick="clearAll()">CLEAR</button>
+            <button class="delete" onclick="deleteLast()">DELETE</button>
+        </div>
+
+        <div class="buttons">
+            <button onclick="press('7')">7</button>
+            <button onclick="press('8')">8</button>
+            <button onclick="press('9')">9</button>
+            <button onclick="press('/')">÷</button>
+
+            <button onclick="press('4')">4</button>
+            <button onclick="press('5')">5</button>
+            <button onclick="press('6')">6</button>
+            <button onclick="press('*')">×</button>
+
+            <button onclick="press('1')">1</button>
+            <button onclick="press('2')">2</button>
+            <button onclick="press('3')">3</button>
+            <button onclick="press('-')">-</button>
+
+            <button onclick="press('.')">.</button>
+            <button onclick="press('0')">0</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="press('+')">+</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        let expression = "";
+
+        function press(value) {
+            expression += value;
+
+            document.getElementById("expression").innerText = expression;
+        }
+
+        function calculate() {
+            try {
+                let answer = eval(expression);
+
+                document.getElementById("result").innerText = answer;
+
+            } catch {
+                document.getElementById("result").innerText = "Error";
+            }
+        }
+
+        function clearAll() {
+            expression = "";
+
+            document.getElementById("expression").innerText = "";
+            document.getElementById("result").innerText = "0";
+        }
+
+        function deleteLast() {
+            expression = expression.slice(0, -1);
+
+            document.getElementById("expression").innerText = expression;
+        }
+
+    </script>
+
+</body>
+</html>
