@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chessboard</title>
+    <style>
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            width: 480px;
+            border: 2px solid black;
+        }
+
+        .white {
+            background-color: white;
+        }
+
+        .black {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Chessboard</h2>
+
+<div class="chessboard" id="board"></div>
+
+<script>
+    for (let i = 0; i < 64; i++) {
+        let box = document.createElement("div");
+
+        if ((Math.floor(i / 8) + i % 8) % 2 == 0) {
+            box.className = "white";
+        } else {
+            box.className = "black";
+        }
+
+        document.getElementById("board").appendChild(box);
+    }
+</script>
+
+</body>
+</html>
