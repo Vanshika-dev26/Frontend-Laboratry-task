@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced To-Do List</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f2f5;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 550px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 4px;
+            border: none;
+            border-radius: 5px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #eee;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        .task span {
+            flex: 1;
+            text-align: left;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .delete {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My To-Do List</h1>
+
+        <input type="text" id="taskInput"
+               placeholder="Enter your task">
+
+        <button onclick="addTask()">Add Task</button>
+
+        <div id="taskList"></div>
+
+    </div>
+
+    <script>
+
+        // Store tasks
+        let tasks = [];
+
+        // Add Task
+        function addTask() {
+
+            let input = document.getElementById("taskInput");
+
+            let task = input.value.trim();
+
+            if (task === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            tasks.push({
+                name: task,
+                completed: false
+            });
+
+            input.value = "";
+
+            displayTasks();
+        }
+
+
+        // Display Tasks
+        function displayTasks() {
+
+            let taskList = document.getElementById("taskList");
+
+            taskList.innerHTML = "";
+
+            for (let i = 0; i < tasks.length; i++) {
+
+                let div = document.createElement("div");
+
+                div.className = "task";
+
+
+                // Checkbox
+                let checkbox = document.createElement("input");
+
+                checkbox.type = "checkbox";
+
+                checkbox.checked = tasks[i].completed;
+
+                checkbox.onchange = function() {
+
+                    tasks[i].completed = checkbox.checked;
+
+                    displayTasks();
+                };
+
+
+                // Task Name
+                let span = document.createElement("span");
+
+                span.innerText = tasks[i].name;
+
+                if (tasks[i].completed) {
+                    span.classList.add("completed");
+                }
+
+
+                // Move Up
+                let up = document.createElement("button");
+
+                up.innerText = "↑";
+
+                up.onclick = function() {
+
+                    if (i > 0) {
+
+                        let temp = tasks[i];
+
+                        tasks[i] = tasks[i - 1];
+
+                        tasks[i - 1] = temp;
+
+                        displayTasks();
+                    }
+                };
+
+
+                // Move Down
+                let down = document.createElement("button");
+
+                down.innerText = "↓";
+
+                down.onclick = function() {
+
+                    if (i < tasks.length - 1) {
+
+                        let temp = tasks[i];
+
+                        tasks[i] = tasks[i + 1];
+
+                        tasks[i + 1] = temp;
+
+                        displayTasks();
+                    }
+                };
+
+
+                // Delete Task
+                let del = document.createElement("button");
+
+                del.innerText = "Delete";
+
+                del.className = "delete";
+
+                del.onclick = function() {
+
+                    tasks.splice(i, 1);
+
+                    displayTasks();
+                };
+
+
+                // Add elements
+                div.appendChild(checkbox);
+
+                div.appendChild(span);
+
+                div.appendChild(up);
+
+                div.appendChild(down);
+
+                div.appendChild(del);
+
+                taskList.appendChild(div);
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>
