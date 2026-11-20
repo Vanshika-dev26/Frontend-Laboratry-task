@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Array Methods Project</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f2f5;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            width: 65%;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            background: #e8f0fe;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>JavaScript Array Methods</h1>
+
+    <input type="number" id="numberInput"
+           placeholder="Enter a number">
+
+    <button onclick="addNumber()">Add Number</button>
+
+    <h3>Numbers: <span id="numbers">10, 20, 30, 40, 50</span></h3>
+
+    <button onclick="showMap()">MAP</button>
+    <button onclick="showFilter()">FILTER</button>
+    <button onclick="showReduce()">REDUCE</button>
+    <button onclick="showForEach()">FOREACH</button>
+    <button onclick="showClosure()">CLOSURE</button>
+
+    <div class="result">
+        <h3>Result:</h3>
+        <p id="output">Your result will appear here.</p>
+    </div>
+
+</div>
+
+<script>
+
+// ARRAY
+let numbers = [10, 20, 30, 40, 50];
+
+
+// NORMAL FUNCTION
+function addNumber() {
+
+    let value = Number(document.getElementById("numberInput").value);
+
+    if (value === 0 || !Number.isFinite(value)) {
+        document.getElementById("output").innerHTML =
+            "Please enter a valid number";
+        return;
+    }
+
+    numbers.push(value);
+
+    document.getElementById("numbers").innerHTML = numbers.join(", ");
+
+    document.getElementById("numberInput").value = "";
+
+    document.getElementById("output").innerHTML =
+        "Number added successfully!";
+}
+
+
+// MAP METHOD
+function showMap() {
+
+    let result = numbers.map(function(num) {
+        return num * 2;
+    });
+
+    document.getElementById("output").innerHTML =
+        "Doubled Numbers: " + result.join(", ");
+}
+
+
+// FILTER METHOD
+function showFilter() {
+
+    let result = numbers.filter(function(num) {
+        return num % 2 === 0;
+    });
+
+    document.getElementById("output").innerHTML =
+        "Even Numbers: " + result.join(", ");
+}
+
+
+// REDUCE METHOD
+function showReduce() {
+
+    let result = numbers.reduce(function(total, num) {
+        return total + num;
+    }, 0);
+
+    document.getElementById("output").innerHTML =
+        "Sum of Numbers: " + result;
+}
+
+
+// FOREACH METHOD
+function showForEach() {
+
+    let result = "";
+
+    numbers.forEach(function(num) {
+        result += num + "<br>";
+    });
+
+    document.getElementById("output").innerHTML =
+        "All Numbers:<br>" + result;
+}
+
+
+// CLOSURE
+function outer() {
+
+    let count = 0;
+
+    return function inner() {
+
+        count++;
+
+        document.getElementById("output").innerHTML =
+            "Closure Counter: " + count;
+    };
+}
+
+let counter = outer();
+
+function showClosure() {
+    counter();
+}
+
+
+// IIFE
+(function() {
+
+    console.log("IIFE executed immediately!");
+
+})();
+
+</script>
+
+</body>
+</html>
